@@ -14,7 +14,7 @@ import teacherRouter from "./routes/teacher";
 import classRouter from "./routes/classes";
 import studentRouter from "./routes/student";
 
-const DB_URL = `mongodb+srv://Admin:${process.env.DB_PASSWORD}@cluster0.fnkgi.mongodb.net/Online-Gradebook?retryWrites=true`;
+const DB_URL = process.env.DB_URI!;
 
 const app = express();
 app.use(express.json());
