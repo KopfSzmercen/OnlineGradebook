@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const student_1 = require("../controllers/student");
+const logged_in_1 = require("../auth/logged-in");
+const router = express_1.Router();
+router.get("/student", logged_in_1.blockWhenLoggedInUser, student_1.getMainStudent);
+router.post("/student-dashboard", logged_in_1.blockWhenLoggedInUser, student_1.postLogInStudent);
+router.get("/student/:studId/dashboard", logged_in_1.isLoggedInStudent, student_1.getStudentDashboard);
+router.get("/student/:studId/:classId", logged_in_1.isLoggedInUser, student_1.getViewStudent);
+router.get("/student/:studId/grade/:gradeId", logged_in_1.isLoggedInStudent, student_1.getViewStudentNote);
+router.post("/student/:studId/add-note", logged_in_1.isLoggedInUser, student_1.postAddNote);
+router.get("/notes/:studId/:noteId/:classId", logged_in_1.isLoggedInUser, student_1.getViewNote);
+router.post("/notes/:studId/:noteId/edit", logged_in_1.isLoggedInTeacher, student_1.postEditNote);
+router.post("/log-out-student", logged_in_1.isLoggedInStudent, student_1.postLogOutStudent);
+router.delete("/notes/:studId/:gradeId/delete", logged_in_1.isLoggedInTeacher, student_1.postDeleteGrade);
+exports.default = router;

@@ -1,0 +1,132 @@
+<% if (role === 'teacher') {%> <%- include('templates/teacher-head') %> <% }
+else { %> <%- include('templates/student-head') %> <% } %>
+
+<div class="container text-center">
+  <div class="card shadow" style="width: 20rem; margin: 35px auto">
+    <div class="card-body">
+      <h1 id="grade-val"
+        class="
+          card-title
+          text-center
+          <%
+          if
+          (+grade.grade
+          >=
+          5){
+          %>text-success<%}
+          %>
+          <%
+          if
+          (+grade.grade
+          >=
+          3
+          &&
+          +grade.grade
+          <
+          5){
+          %>text-warning<%}
+          %>
+          <%
+          if
+          (+grade.grade
+          <=
+          2){
+          %>text-danger<%}
+          %>
+        "
+      >
+        <%= grade.grade %>
+      </h1>
+      <h5 class="card-title mt-4">Grade details:</h5>
+      <p class="card-text lead" id="subject-val">
+        <span class="text-primary lead">Subject: </span><%= grade.subjectName %>
+      </p>
+      <p class="card-text lead" id="date-val">
+        <span class="text-primary lead">Date: </span><%= grade.date %>
+      </p>
+      <p class="card-text" id="notes-val">
+        <span class="lead text-primary">Additional notes:</span>
+        <%= grade.additionalNotes %>
+      </p>
+
+      <% if (role === 'teacher') {%>  <button id= "toggle-modal" type="button" class="btn btn-warning mt-4" data-bs-toggle="modal" data-bs-target="#add-note-modal" id="toggle-modal">Edit</button> 
+      <button id="toggle-delete-modal" type="button" class="btn btn-danger mt-4" data-bs-toggle="modal" data-bs-target="#delete-grade-modal" id="toggle-delete-modal">Delete</button>
+      <%}%>
+    </div>
+  </div>
+  
+  <% if (role === "teacher") { %><a href="/student/<%= studId %>/<%= classId %>" class="btn btn-primary" id="redirect-btn">Go back</a>
+  <%} else { %>
+    <a href="/student/<%= studId %>/dashboard" class="btn btn-primary" id="redirect-btn">Go back</a>
+  <%}%>
+</div>
+
+<input type="hidden" id="mode" value="<%= mode %>">
+
+
+<% if (role === 'teacher') { %>
+<div class="modal fade" id="add-note-modal" tabindex="-1" aria-labelledby="add-note-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add a grade</h5>
+        </div>
+        <div class="modal-body">
+          
+            <div class="form">
+                <label for="grade">Grade:</label>
+                <input type="number" name="grade" id="grade" class="form-control mt-1" value="<%= grade.grade %>">
+                <div class="invalid-feedback d-none" id="grade-error"></div>
+
+                <label for="subject-name" class="mt-3">Subject: </label>
+                <input type="text" name="subject-name" id="subject-name" class="form-control mt-1" placeholder="Subject" value="<%= grade.subjectName %>">
+                <div class="invalid-feedback d-none" id="subject-name-error"></div>
+                
+                <label for="date" class="mt-3">Date:</label>
+                <input type="date" name="date" id="date" class="form-control mt-1" value="<%= grade.date %>">
+                <div class="invalid-feedback d-none" id="date-error"></div>
+
+                <label for="add-notes" class="mt-3">Additional notes:</label>
+                <textarea name="add-notes" id="add-notes" cols="10" rows="5" placeholder="Additional notes" class="form-control mt-1"><%= grade.additionalNotes %></textarea>
+                <div class="invalid-feedback d-none" id="add-notes-error"></div>
+
+            </div>
+        </div>
+        <div class="modal-footer justify-content-center mt-2">
+            <button
+              type="button"
+              class="btn btn-secondary btn-lg"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary btn-lg" id="add-note-btn">
+              Save
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="_csrf" id="csrf-token" value="<%= csrfToken %>">
+  <input type="hidden" id="studId" value="<%= studId %>">
+  <input type="hidden" id="gradeId" value="<%= grade._id %>">
+
+  
+  <div class="modal fade" id="delete-grade-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex align-items-center justify-content-center">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure to do it?</h5>
+      </div>
+      <div class="modal-body d-flex align-items-center justify-content-center">
+        <button class="btn btn-success mx-2" id="confirm-delete-grade">Yes</button>
+        <button class="btn btn-danger mx-2" data-bs-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <% } %>
+  <%- include('templates/footer') %>
+  </body>
+  <script src="/add-note.js"></script>
+  </html>

@@ -1,0 +1,172 @@
+<%- include('templates/head') %>
+
+<section class="mt-4 pt-2">
+  <div class="container">
+    <div class="row text-center d-flex flex-column align-items-center">
+      
+      <div class="" style="max-width: 500px">
+        <div class="card bg-primary text-light">
+          <div class="card-body">
+            <h3 class="card-title mb-3">Don't have an account yet?</h3>
+            <p class="card-text">Sign in and access to the teacher panel!</p>
+            <button
+              class="btn btn-warning btn-lg"
+              data-bs-toggle="modal"
+              data-bs-target="#sign-up-modal"
+            >
+              Sign up
+            </button>
+          </div>
+        </div>
+      </div>
+     
+      <div class="mt-5" style="max-width: 500px">
+        <p
+        class="lead text-success"
+        id="successfull-sign-up"
+        style="display: none"
+      >
+        Your account has been successfully created. You may now log in.
+      </p>
+        <div class="card bg-dark text-light">
+          <div class="card-body">
+            <h3 class="card-title mb-3">Do you have an account already?</h3>
+            <p class="card-text">Log in and start work!</p>
+            <button
+              class="btn btn-warning btn-lg"
+              data-bs-toggle="modal"
+              data-bs-target="#log-in-form"
+            >
+              Log in
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sign in modal -->
+<div class="modal fade" tabindex="-1" id="sign-up-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <h5 class="modal-title">Sign up</h5>
+      </div>
+      <div class="modal-body">
+        <p>Create a free account</p>
+
+        <div id="sign-up-form">
+          <input
+            type="hidden"
+            name="_csrf"
+            id="csrfToken-sign-up"
+            value="<%= csrfToken %>"
+          />
+          <label for="username">Name: </label>
+          <input type="text" id="username" class="form-control" />
+          <div class="invalid-feedback d-none" id="invalid-username">
+            Invalid username
+          </div>
+
+          <label for="sign-up-email" class="mt-3">Email: </label>
+          <input
+            type="email"
+            id="sign-up-email"
+            class="form-control"
+            data-email-input
+          />
+          <div class="invalid-feedback d-none" id="sign-up-email-error"></div>
+
+          <label for="password" class="mt-3">Password:</label>
+          <input type="password" class="form-control" id="sign-up-password" />
+          <div
+            class="invalid-feedback d-none"
+            id="sign-up-password-error"
+          ></div>
+
+          <label for="confirm-password" class="mt-3">Confirm passowrd:</label>
+          <input type="password" class="form-control" id="confirm-password" />
+          <div
+            class="invalid-feedback d-none"
+            id="confirm-password-error"
+          ></div>
+
+          <div class="modal-footer justify-content-center mt-2">
+            <button
+              type="button"
+              class="btn btn-secondary btn-lg"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg"
+              id="send-button"
+            >
+              Sign up
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Log in -->
+<div class="modal fade" tabindex="-1" id="log-in-form">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <h5 class="modal-title">Log in</h5>
+      </div>
+      <div class="modal-body">
+        <p>Log in to your account</p>
+
+        <div id="log-in-form">
+          <label for="email-2">Email: </label>
+          <input type="email" id="email-2" class="form-control" />
+          <div
+            class="invalid-feedback d-none"
+            id="invalid-email-feedback"
+          ></div>
+
+          <label for="password-2" class="mt-3">Password:</label>
+          <input type="password" class="form-control" id="password" />
+          <div
+            class="invalid-feedback d-none"
+            id="invalid-password-feedback"
+          ></div>
+          <input
+            type="hidden"
+            name="_csrf"
+            id="csrfToken-log-in"
+            value="<%= csrfToken %>"
+          />
+          <div class="modal-footer justify-content-center">
+            <button
+              type="button"
+              class="btn btn-secondary btn-lg"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg"
+              id="log-in-button"
+            >
+              Log in
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('templates/footer') %>
+</body>
+<script src="/teacher-main.js"></script>
+</html>

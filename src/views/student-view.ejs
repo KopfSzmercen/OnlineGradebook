@@ -1,0 +1,90 @@
+<%- include('templates/teacher-head') %>
+
+<div class="container p-3 text-center">
+  <div class="card" style="width: 90%; margin: 2rem auto; max-width: 1000px">
+    <div class="card-body">
+      <h1 class="card-title"><%= studentName %> </h1>
+      <h2 class="text-primary mt-3">Grades</h2>
+
+      <div style="overflow: scroll; max-height: 60vh">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Grade:</th>
+              <th scope="col">Subject:</th>
+              <th scope="col">Date:</th>
+              <th scope="col">Details:</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <% grades.forEach(g => { %>
+            <tr>
+              <th scope="row"><%= g.grade %></th>
+              <td> <%= g.subjectName %> </td>
+              <td><%= g.date %> </td>
+              <td><a class="btn btn-success" href="/notes/<%= studId %>/<%= g._id %>/<%= classId %>">Details</button></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4"><span class="lead">Code: </span> <%= studCode %></p>
+      <button type="button" class="btn btn-warning mt-2" data-bs-toggle="modal" data-bs-target="#add-note-modal" id="toggle-modal">Add grade</button>
+    </div>
+  </div>
+  <a href="/class/<%= classId %>/students" class="btn btn-primary">Go back</a>
+</div>
+
+<input type="hidden" id="student-id" value="<%= studId %>">
+<input type="hidden" id="csrf-token" value="<%= csrfToken %>">
+<input type="hidden" id="mode" value="<%= mode %>">
+<input type="hidden" id="class-id" value="<%= classId %>">
+
+<!-- Adding grade modal -->
+<div class="modal fade" id="add-note-modal" tabindex="-1" aria-labelledby="add-note-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add a grade</h5>
+        </div>
+        <div class="modal-body">
+          
+            <div class="form">
+                <label for="grade">Grade:</label>
+                <input type="number" name="grade" id="grade" class="form-control mt-1">
+                <div class="invalid-feedback d-none" id="grade-error"></div>
+
+                <label for="subject-name" class="mt-3">Subject: </label>
+                <input type="text" name="subject-name" id="subject-name" class="form-control mt-1" placeholder="Subject">
+                <div class="invalid-feedback d-none" id="subject-name-error"></div>
+                
+                <label for="date" class="mt-3">Date:</label>
+                <input type="date" name="date" id="date" class="form-control mt-1">
+                <div class="invalid-feedback d-none" id="date-error"></div>
+
+                <label for="add-notes" class="mt-3">Additional notes:</label>
+                <textarea name="add-notes" id="add-notes" cols="10" rows="5" placeholder="Additional notes" class="form-control mt-1"></textarea>
+                <div class="invalid-feedback d-none" id="add-notes-error"></div>
+
+            </div>
+        </div>
+        <div class="modal-footer justify-content-center mt-2">
+            <button
+              type="button"
+              class="btn btn-secondary btn-lg"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary btn-lg" id="add-note-btn">
+              Add
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+  <%- include('templates/footer') %> 
+</body>
+
+<script src="/add-note.js"></script>
+</html>

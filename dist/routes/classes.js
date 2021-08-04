@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const class_1 = require("../controllers/class");
+const express_validator_1 = require("express-validator");
+const logged_in_1 = require("../auth/logged-in");
+const router = express_1.Router();
+router.get("/class/:id", logged_in_1.isLoggedInTeacher, class_1.getSingleClass);
+router.get("/class/:id/students", logged_in_1.isLoggedInTeacher, class_1.getStudents);
+router.delete("/student/delete/:id", logged_in_1.isLoggedInTeacher, class_1.postDeleteStudent);
+router.post("/add-student", logged_in_1.isLoggedInTeacher, express_validator_1.body("studentName").isLength({ min: 5 }), class_1.postAddStudent);
+exports.default = router;

@@ -1,0 +1,123 @@
+<%- include('templates/teacher-head') %> 
+
+  <section class="my-4">
+    <div class="container text-center">
+      <% if (classes.length === 0){ %>
+        <h2>You have no classes yet</h2>
+      <%} else { %> 
+      <h2>Your classes</h2>
+      <% } %>
+      <div class="row my-5 g-4" id="classes-container">
+        <% if (classes.length > 0){ %>
+          <% classes.forEach((c) => { %>
+            <div class="col-sm-6 col-lg-3 hover" data-name="<%= c.className %>" id="<%= c._id %>">
+              <div class="card  shadow" style="background: #b5b5b51c;">
+                  <div class="card-body">
+                    <h3 class="card-title mb-3"><%= c.className %> </h3>
+                    <p class="card-text lead"><span class="lead">Students: </span> <%= c.studentsNumber %></p>
+              
+                    <div class="d-flex justify-content-around">
+                        <a href="/class/<%= c._id %>"
+                        class="btn btn-warning"
+                      >
+                        Open
+                    </a>
+              
+                     
+                      <button
+                        class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delete-class-modal"
+                        type="submit"
+                        data-delete-btn
+                        value="<%= c._id %>"
+                      >
+                      
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <% }); %> 
+       <%} %>
+    </div>
+
+    
+    <button
+        class="btn btn-success btn-lg my-5"
+        data-bs-toggle="modal"
+        data-bs-target="#add-class-modal"
+      >
+        Add a class
+      </button>
+    
+  </section>
+
+  <!-- Add a clas modal -->
+  <div class="modal fade" tabindex="-1" id="add-class-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title">Add a class</h5>
+        </div>
+        <div class="modal-body" id="add-class-modal">
+          <div id="add-class-form">
+            <label for="email">Class name: </label>
+            <input type="text" id="class-name" class="form-control" />
+            <div class="invalid-feedback d-none" id="class-name-error">
+              
+            </div>
+
+            <label for="students-number" class="mt-2"
+              >Number of students:</label
+            >
+            <input type="number" class="form-control" id="students-number" />
+            <div class="invalid-feedback d-none" id="students-number-error"></div>
+            <input type="hidden" name="_csrf" id="csrfToken-add-class" value="<%= csrfToken %>">
+            <div class="modal-footer justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-secondary btn-lg"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary btn-lg" id="add-class-btn">
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Delete class modal -->
+  <div class="modal fade" id="delete-class-modal" tabindex="-1" aria-labelledby="delete-class-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header justify-content-around">
+          <h5 class="modal-title" id="exampleModalLabel">Are you sure do do it?</h5>
+        </div>
+        <div class="modal-footer justify-content-around">
+          <button type="button" class="btn btn-success btn-lg" id="confirm-delete-btn">Yes</button>
+          <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal" id="remove-delete-modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include('templates/footer') %> 
+</body>
+<script src="/create-class.js"></script>
+<style>
+  .hover {
+    transition: 0.2s;
+  }
+  .hover:hover {
+    transform: scale(1.02);
+  }
+</style>
+</html>

@@ -1,0 +1,50 @@
+<%- include('templates/head') %>
+
+<section class="mt-4 pt-2">
+    <div class="container">
+      <div class="row text-center d-flex flex-column align-items-center">
+        <div class="" style="max-width: 500px">
+          <div class="card bg-primary text-light">
+            <div class="card-body">
+              <h3 class="card-title mb-3">Do you have a code from your teacher?</h3>
+              <p class="card-text">Enter it and view your grades now!</p>
+              <button
+                class="btn btn-warning btn-lg"
+                data-bs-toggle="modal"
+                data-bs-target="#log-in-modal"
+              >
+                Log in
+              </button>
+            </div>
+          </div>
+        </div>
+  </section>
+
+  <!-- Log in modal -->
+
+  <div class="modal fade" id="log-in-modal" tabindex="-1" aria-labelledby="log-in-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header d-flex align-items-center justify-content-center">
+          <h5 class="modal-title" id="exampleModalLabel">Log in</h5>
+        </div>
+        <div class="modal-body">
+          <div>
+              <label for="student-code">Enter your code</label>
+              <input class="form-control mt-2" type="text" id="student-code" placeholder="Your code">
+              <div class="invalid-feedback d-none" id="student-code-error"></div>
+          </div>
+        </div>
+        <div class="modal-footer d-flex align-items-center justify-content-center">
+          <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="log-in-btn">Log in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="_csrf" id="csrf-token" value="<%= csrfToken %>">
+  <%- include('templates/footer') %> 
+  </body>
+  <script src="/log-in-student.js"></script>
+  </html>
+

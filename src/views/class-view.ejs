@@ -1,0 +1,48 @@
+<%- include('templates/teacher-head') %> 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <section class="mt-4">
+    <div class="container text-center">
+      <h1>Class: <%= thisClass.className %></h1>
+      <p class="fw-bold">Number of students: <%= thisClass.studentsNumber %></p>
+      <a
+        href="/class/<%= thisClass._id %>/students"
+        class="btn btn-primary btn-large fw-bold p-2 mt-4"
+      >
+        Show students
+      </a>
+      <input
+        type="hidden"
+        name=""
+        id="grades-arr"
+        value="<%= grades %>"
+      />
+
+      <div
+        class="row text-center my-5 justify-content-around align-items-center"
+      >
+        <% if (!isNaN(avGrades)){ %> 
+        <h4>Avarage grades: <%= avGrades %></h4>
+        <div class="col-md-9 pt-5">
+          <div
+            class="chart-container"
+            style="
+              position: relative;
+              height: 40vh;
+              margin: auto;
+              max-height: 400px;
+            "
+          >
+          <canvas id="grades-chart"> </canvas>
+          </div>
+          
+        </div>
+        <%} else { %>
+          <h4>No grades yet</h4>
+        <% }%>
+      </div>
+    </div>
+  </section>
+  <%- include('templates/footer') %> 
+  <script src="/chart.js"></script>
+</html>

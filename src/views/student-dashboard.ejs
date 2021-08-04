@@ -1,0 +1,81 @@
+<%- include('templates/student-head') %>
+
+<section>
+  <div class="container text-center">
+    <h3 class="mt-4"><%= studName %></h3>
+
+    <div class="row mt-5 ">
+      <h4 class="text-primary">Your notes</h4>
+      <% if (grades.length === 0) { %>
+      <p>You don't have any grades yet</p>
+      <% } else { grades.forEach(g => { %>
+      <div
+        class="
+          col-sm-6 col-lg-3
+          d-flex
+          align-items-center
+          justify-content-around
+          hover-card
+          mt-3
+        "
+      >
+        <div
+          class="card text-dark bg-light shadow"
+          style="width: 15rem; height: 265px;"
+        >
+        <div class="card-header bg-light">
+            <h1
+              class="
+                card-title
+                <%
+                if
+                (+g.grade
+                >=
+                5){
+                %>text-success
+                <%}
+                else
+                if
+                (+g.grade
+                ===
+                4
+                ||
+                +g.grade
+                ===
+                3)
+                {%>
+                text-warning
+                <%}
+                else
+                {%>
+                text-danger
+                <%}%>
+              "
+            >
+              <%= g.grade %>
+            </h1>
+        </div>
+          <div class="card-body bg-primary text-light ">
+            <p><span class="fw-bold">Subject: </span><%= g.subjectName %></p>
+            <p class="card-text"><span class="fw-bold">Date: </span><%= g.date %></p>
+            <p class="card-text">
+              <span class="fw-bold">Notes: </span> <% if (g.additionalNotes.length > 25) { %>
+                <%= g.additionalNotes.substr(0, 15) %>
+                ...
+                <a href="/student/<%= studId %>/grade/<%= g._id %>" class="btn btn-light mt-3">Read more</a>
+                
+              <%} else {%>
+                <%= g.additionalNotes %>
+                <% } %>
+            </p>
+          </div>
+        </div>
+      </div>
+      <% });} %>
+    </div>
+  </div>
+</section>
+
+<%- include('templates/footer') %>
+</body>
+</html>
